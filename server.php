@@ -14,5 +14,6 @@ date_default_timezone_set('Asia/Bangkok'); // ถ้าตั้งใน php.in
     <tr><td>Timezone</td><td><?php echo date_default_timezone_get(); ?></td></tr>
     <tr><td>เวลาบนเซิร์ฟเวอร์</td><td><?php echo date('d/m/Y H:i:s'); ?></td></tr>
   </table>
+  
 </body>
 </html>
