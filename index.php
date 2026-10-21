@@ -51,6 +51,50 @@ $beverages = [
         'bg_color'    => '#e0f7fa',
         'icon_color'  => '#00838f',
         'icon_svg'    => '<path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="12" y1="2" x2="10" y2="8"/>'
+    ],
+    [
+        'id'          => 5,
+        'title'       => 'ชาไทยเย็น',
+        'subtitle'    => 'Thai Milk Tea',
+        'price'       => 40,
+        'badge'       => 'ยอดฮิต',
+        'badge_color' => 'bg-danger',
+        'bg_color'    => '#ffe0b2',
+        'icon_color'  => '#e65100',
+        'icon_svg'    => '<path d="M17 8h1a4 4 0 0 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="12" y1="2" x2="12" y2="8"/>'
+    ],
+    [
+        'id'          => 6,
+        'title'       => 'โกโก้เข้มข้น',
+        'subtitle'    => 'Dark Cocoa',
+        'price'       => 45,
+        'badge'       => 'เข้มข้น',
+        'badge_color' => 'bg-secondary',
+        'bg_color'    => '#d7ccc8',
+        'icon_color'  => '#4e342e',
+        'icon_svg'    => '<path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>'
+    ],
+    [
+        'id'          => 7,
+        'title'       => 'นมสดฮอกไกโด',
+        'subtitle'    => 'Hokkaido Milk',
+        'price'       => 45,
+        'badge'       => 'หอมนุ่ม',
+        'badge_color' => 'bg-primary',
+        'bg_color'    => '#e3f2fd',
+        'icon_color'  => '#1565c0',
+        'icon_svg'    => '<path d="M7 11h10l-1 10H8L7 11z"/><path d="M6 11V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v5"/>'
+    ],
+    [
+        'id'          => 8,
+        'title'       => 'ชามะนาว',
+        'subtitle'    => 'Lemon Tea',
+        'price'       => 35,
+        'badge'       => 'เปรี้ยวซ่า',
+        'badge_color' => 'bg-warning text-dark',
+        'bg_color'    => '#f0f4c3',
+        'icon_color'  => '#827717',
+        'icon_svg'    => '<path d="M8 2h8l1 7H7L8 2z"/><path d="M7 9l1 12h8l1-12"/><line x1="12" y1="2" x2="9" y2="5"/>'
     ]
 ];
 ?>
@@ -200,7 +244,7 @@ $beverages = [
             </div>
         </div>
 
-        <!-- 2x2 Grid Layout (เมนูตัวอย่าง 1 - 4 ตาม Wireframe) -->
+        <!-- 2x2 Grid Layout -->
         <div class="row row-cols-2 g-3 mb-4">
             <?php foreach ($beverages as$item): ?>
                 <div class="col">
@@ -290,84 +334,6 @@ $beverages = [
         </div>
     </div>
 
-    <!-- Bootstrap 5 JS Bundle CDN (Includes Popper) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="crossorigin"></script>
-
-    <!-- Custom Interactive JS Logic -->
-    <script>
-        let currentQueueNumber = 9;
-        let selectedDrink = null;
-
-        // Function: Handle Beverage Selection
-        function selectBeverage(button) {
-            const title = button.getAttribute('data-title');
-            const price = button.getAttribute('data-price');
-
-            selectedDrink = { title: title, price: price };
-
-            // Update DOM Summary
-            document.getElementById('selectedDrinkName').innerText = title;
-            document.getElementById('selectedDrinkPrice').innerText = price + ' ฿';
-            document.getElementById('orderSummaryBox').classList.remove('d-none');
-
-            // Highlight active button style
-            document.querySelectorAll('.btn-select-item').forEach(btn => {
-                btn.classList.remove('btn-danger', 'text-white');
-                btn.classList.add('btn-outline-danger');
-                btn.innerText = 'เลือก';
-            });
-
-            button.classList.remove('btn-outline-danger');
-            button.classList.add('btn-danger', 'text-white');
-            button.innerText = 'เลือกแล้ว';
-        }
-
-        // Function: Clear Selection
-        function clearSelection() {
-            selectedDrink = null;
-            document.getElementById('orderSummaryBox').classList.add('d-none');
-            document.querySelectorAll('.btn-select-item').forEach(btn => {
-                btn.classList.remove('btn-danger', 'text-white');
-                btn.classList.add('btn-outline-danger');
-                btn.innerText = 'เลือก';
-            });
-        }
-
-        // Function: Trigger Queue Modal Pop-up
-        function triggerQueueModal() {
-            // Generate Queue String (e.g. A-009, A-010)
-            const queueFormatted = 'A-' + String(currentQueueNumber).padStart(3, '0');
-            document.getElementById('modalQueueNumber').innerText = queueFormatted;
-
-            // Generate Current Timestamp
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) + ' น.';
-            document.getElementById('modalTicketTime').innerText = timeString;
-
-            // Update Summary Details
-            const summaryContainer = document.getElementById('modalSelectedSummary');
-            if (selectedDrink) {
-                summaryContainer.innerHTML = `<i class="bi bi-cup-straw text-danger me-1"></i> ${selectedDrink.title} <span class="text-danger float-end">${selectedDrink.price} ฿</span>`;
-            } else {
-                summaryContainer.innerHTML = `<i class="bi bi-shop text-secondary me-1"></i> สั่งหน้าร้าน / ยังไม่ได้เลือกเมนู`;
-            }
-
-            // Show Bootstrap Modal
-            const queueModal = new bootstrap.Modal(document.getElementById('queueTicketModal'));
-            queueModal.show();
-
-            // Increment queue for next click
-            currentQueueNumber++;
-           
-            // Clear current selection state after ticket generated
-            clearSelection();
-        }
-    </script>
-
-    <!-- ==========================================
-         ส่วนระบบตะกร้าสินค้า (Cart System Extension)
-         ========================================== -->
-
     <!-- Modal แสดงรายการในตะกร้า -->
     <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -405,11 +371,16 @@ $beverages = [
         </span>
     </button>
 
+    <!-- Bootstrap 5 JS Bundle CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="crossorigin"></script>
+
+    <!-- Unified JS Logic (แก้ไขบั๊กการเพิ่มซ้ำเรียบร้อยแล้ว) -->
     <script>
+        let currentQueueNumber = 9;
         let cart = [];
 
-        // Override selectBeverage เดิม
-        window.selectBeverage = function(button) {
+        // ฟังก์ชันเลือกเครื่องดื่มลงตะกร้า (ทำงานจุดเดียว)
+        function selectBeverage(button) {
             const title = button.getAttribute('data-title');
             const price = parseFloat(button.getAttribute('data-price'));
 
@@ -421,8 +392,9 @@ $beverages = [
             }
 
             updateCartUI();
-        };
+        }
 
+        // อัปเดตการแสดงผลของตะกร้าและสถานะปุ่ม
         function updateCartUI() {
             const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
             const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -448,6 +420,7 @@ $beverages = [
             renderCartItems();
         }
 
+        // แสดงรายการใน Cart Modal
         function renderCartItems() {
             const listContainer = document.getElementById('cartItemsList');
             const totalPriceEl = document.getElementById('cartTotalPrice');
@@ -484,6 +457,7 @@ $beverages = [
             totalPriceEl.innerText = total + ' ฿';
         }
 
+        // ปรับจำนวน (+/-)
         function changeQuantity(index, delta) {
             cart[index].quantity += delta;
             if (cart[index].quantity <= 0) {
@@ -492,12 +466,14 @@ $beverages = [
             updateCartUI();
         }
 
+        // เปิด Modal ตะกร้า
         function openCartModal() {
             renderCartItems();
             const cartModal = new bootstrap.Modal(document.getElementById('cartModal'));
             cartModal.show();
         }
 
+        // กดยืนยันจากตะกร้า
         function checkoutCart() {
             const cartModalEl = document.getElementById('cartModal');
             const modalInstance = bootstrap.Modal.getInstance(cartModalEl);
@@ -507,7 +483,8 @@ $beverages = [
             triggerQueueModal();
         }
 
-        window.clearSelection = function() {
+        // ล้างตะกร้า
+        function clearSelection() {
             cart = [];
             updateCartUI();
             document.querySelectorAll('.btn-select-item').forEach(btn => {
@@ -515,9 +492,10 @@ $beverages = [
                 btn.classList.add('btn-outline-danger');
                 btn.innerText = 'เลือก';
             });
-        };
+        }
 
-        window.triggerQueueModal = function() {
+        // แสดง Modal คิวและสรุปรายการ
+        function triggerQueueModal() {
             const queueFormatted = 'A-' + String(currentQueueNumber).padStart(3, '0');
             document.getElementById('modalQueueNumber').innerText = queueFormatted;
 
@@ -554,7 +532,7 @@ $beverages = [
 
             currentQueueNumber++;
             clearSelection();
-        };
+        }
     </script>
 </body>
 </html>
